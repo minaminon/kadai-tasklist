@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+  before_action :task_param, only: [:show,:edit,:update,:destroy]
+  
+  
   def index
     @tasks=Task.all
   end
@@ -20,15 +23,12 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @task=Task.find(params[:id])
   end
 
   def show
-    @task=Task.find(params[:id])
   end
   
   def update
-    @task=Task.find(params[:id])
     if @task.update(strong_param)
       flash[:id]='更新されました'
       redirect_to @task
@@ -39,7 +39,6 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    @task=Task.find(params[:id])
     @task.destroy
     
     flash[:seccess] = '削除に成功しました'
@@ -48,7 +47,11 @@ class TasksController < ApplicationController
   
   private
   
+  def task_param
+    @task=Task.find(params[:id])
+  end
+  
   def strong_param
-    params.require(:task).permit(:content)
+    params.require(:task).permit(:content,:status)
   end
 end
