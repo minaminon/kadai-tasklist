@@ -4,12 +4,15 @@ class TasksController < ApplicationController
   
   
   def index
-    @tasks=Task.all
+    if logged_in?
+    @user=current_user
+    @tasks=current_user.tasks.order('created_at DESC')
+    end
   end
   
   def create
-    @task=Task.new(strong_param)
-    
+    user=current_user
+    @task=user.tasks.new(strong_param)
     if @task.save
       flash[:success]='タスクが正常に登録されました。'
       redirect_to @task

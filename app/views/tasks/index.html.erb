@@ -1,11 +1,10 @@
 <h1>タスクリスト一覧</h1>
 
 <% unless logged_in? %>
-<%= link_to 'タスク登録',new_task_path,class: 'btn btn-primary' %>
 <%= link_to 'ユーザ登録',signup_path, class: 'btn btn-primary' %>
 
 <% else %>
-<%=current_user.name %>さん
+<%=current_user.name %>さん</br>
 
 <% if @tasks.any? %>
   <table class="table table-striped">
